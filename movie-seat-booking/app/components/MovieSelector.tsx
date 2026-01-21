@@ -16,6 +16,7 @@ export default function MovieSelector({ movies, selectedMovieId, setSelectedMovi
             </option>
         ))}
       </select>
+
     </div>
   );
 }

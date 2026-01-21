@@ -1,0 +1,68 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "Title": "Fast and Furious 6",
+      "Year": "2013",
+      "price": 100
+    },
+    {
+      "id": "2",
+      "Title": "The Dark Knight",
+      "Year": "2008",
+      "price": 120
+    },
+    {
+      "id": "3",
+      "Title": "Inception",
+      "Year": "2010",
+      "price": 150
+    },
+    {
+      "id": "4",
+      "Title": "Interstellar",
+      "Year": "2014",
+      "price": 130
+    },
+    {
+      "id": "5",
+      "Title": "Stalker",
+      "Year": "1979",
+      "price": 100
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "movieId": "2",
+      "seats": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "name": "John Doe",
+      "phone": "987-654-3210"
+    },
+    {
+      "id": "2",
+      "movieId": "3",
+      "seats": [
+        "B1",
+        "B2"
+      ],
+      "name": "Jane Smith",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": "d54b",
+      "name": "Stella Jakstrand",
+      "phone": "0760181123",
+      "movieId": "2",
+      "seatIds": [
+        21,
+        34,
+        35
+      ]
+    }
+  ]
+}

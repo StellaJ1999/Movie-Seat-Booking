@@ -18,34 +18,34 @@ body {
 }
 
 .movie-container {
-  margin: 20px 0;
+  margin: 1.25rem 0;
 }
 
 .movie-container select {
   background-color: #fff;
   border: 0;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
   font-family: inherit;
-  margin-left: 10px;
-  padding: 5px 15px;
+  margin-left: 0.625rem;
+  padding: 0.3125rem 0.9375rem;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
 }
 
 .container {
-  perspective: 1000px;
-  margin-bottom: 30px;
+  perspective: 62.5rem;
+  margin-bottom: 1.875rem;
 }
 
 .seat {
   background-color: #444451;
-  height: 12px;
-  width: 15px;
-  margin: 3px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  height: 0.75rem;
+  width: 0.9375rem;
+  margin: 0.1875rem;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
 }
 
 .seat.selected {
@@ -57,11 +57,11 @@ body {
 }
 
 .seat:nth-of-type(2) {
-  margin-right: 18px;
+  margin-right: 1.125rem;
 }
 
 .seat:nth-last-of-type(2) {
-  margin-left: 18px;
+  margin-left: 1.125rem;
 }
 
 .seat:not(.occupied):hover {
@@ -76,8 +76,8 @@ body {
 
 .showcase {
   background: rgba(0, 0, 0, 0.1);
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
   color: #777;
   list-style-type: none;
   display: flex;
@@ -88,11 +88,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 10px;
+  margin: 0 0.625rem;
 }
 
 .showcase li small {
-  margin-left: 2px;
+  margin-left: 0.125rem;
 }
 
 .row {
@@ -101,15 +101,15 @@ body {
 
 .screen {
   background-color: #fff;
-  height: 70px;
+  height: 4.375rem;
   width: 100%;
-  margin: 15px 0;
+  margin: 0.9375rem 0;
   transform: rotateX(-45deg);
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0.1875rem 0.625rem rgba(255, 255, 255, 0.7);
 }
 
 p.text {
-  margin: 5px 0;
+  margin: 0.3125rem 0;
 }
 
 p.text span {
@@ -119,10 +119,125 @@ p.text span {
 #continue-button {
   background-color: #6feaf6;
   border: 0;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   color: #000;
   cursor: pointer;
-  font-size: 16px;
-  padding: 10px 20px;
+  font-size: 1rem;
+  padding: 0.625rem 1.25rem;
   transition: background-color 0.3s ease;
+}
+
+.booking-module {
+  width: min(57.5rem, 92vw);
+  background: rgba(255, 255, 255, 0.05);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 1.125rem 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+  position: relative;
+  align-items: center;
+}
+
+.booking-module h2 {
+  margin: 0;
+}
+
+.booking-module h3 {
+  margin: 0.25rem 0 0.5rem;
+  color: #cfd1e2;
+  font-weight: 500;
+}
+
+.booking-module__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.booking-module__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.75rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.booking-module__close:hover {
+  color: #6feaf6;
+}
+
+.booking-module label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  color: #cfd1e2;
+  font-size: 0.875rem;
+}
+
+.booking-module input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+.booking-module input:focus {
+  outline: 0.125rem solid #6feaf6;
+  border-color: transparent;
+}
+
+#book-button {
+  background-color: #6feaf6;
+  border: none;
+  border-radius: 0.5rem;
+  color: #000;
+  padding: 0.75rem 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.warning { 
+  color: #f8b4b4;
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem; 
+}
+
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(37, 36, 51, 0.97);
+  z-index: 1000;
+}
+
+.booking-module__stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.booking-module__stat strong {
+  font-size: 1rem;
+}
+
+.booking-module__stats {
+  display: grid;
+  gap: 0.375rem;
+  margin-top: 0.5rem;
 }

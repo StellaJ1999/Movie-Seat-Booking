@@ -7,6 +7,6 @@ export default function Summary() {
       <span id="count"> 0 </span>
         seats for a price of $
         <span id="total">0 </span>
-    </p>    
+    </p>
     )
 }
