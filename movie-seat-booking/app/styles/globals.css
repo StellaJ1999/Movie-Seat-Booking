@@ -128,7 +128,7 @@ p.text span {
 }
 
 .booking-module {
-  width: min(57.5rem, 92vw);
+  width: min(35rem, 92vw);
   background: rgba(255, 255, 255, 0.05);
   border: 0.0625rem solid rgba(255, 255, 255, 0.08);
   border-radius: 0.75rem;
@@ -153,8 +153,6 @@ p.text span {
 .booking-module__header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  text-align: center;
 }
 
 .booking-module__close {

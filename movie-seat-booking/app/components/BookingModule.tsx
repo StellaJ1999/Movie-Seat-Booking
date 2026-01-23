@@ -1,46 +1,45 @@
 "use client";
-import WarningMessage from './warningMessage';
+import WarningMessage from './WarningMessage';
 import React from 'react';
 import { useState } from 'react';
+import { useBooking } from '@/lib/useBooking';
 
 // Interface för typning av props som skickas in till BookingModule 
 // komponenten från page.tsx
 interface BookingModuleProps {
-  movie: { id?: string | number; title?: string; price?: number } | null;
-  seats?: Array<{ id?: string | number; selected: boolean }>;
-  onBook?: (payload: { name: string; phone: string; movieId: string | number; seatIds: Array<string | number> }) => void;
+  movie: { id?: number; title?: string; price?: number } | null;
+  seats?: Array<{ id?: number; selected: boolean }>;
+  onBook?: (payload: { name: string; phone: string; movieId: number; seats: number[] }) => void;
   onClose?: () => void;
+  selectedSeatCount?: number;
+  totalPrice?: number;
 }
 
-export default function BookingModule({ movie , seats = [], onBook, onClose }: BookingModuleProps) {
+export default function BookingModule({ movie , seats = [], onBook, onClose, selectedSeatCount, totalPrice }: BookingModuleProps) {
     
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
 
-  
-  const selectedCount = seats.filter((seat) => seat.selected).length;
-  const title = movie?.title || "Select a movie";
-  const price = movie?.price ?? 0; // Defaultvärde 0 om price är undefined
-  const total = selectedCount * price; 
+  function handleBookClick() {
 
-    function handleBookClick() {
-          if (!name.trim() || !phone.trim()) {
-              setWarningMessage("Please fill in all required fields.");
-              return;
-          }
-          if (!movie) {
-            setWarningMessage("Movie not found.");
-            return;
-          } 
-          setWarningMessage("");
-            onBook?.({
-              name,
-              phone,
-              movieId: movie.id ?? "",
-              seatIds: seats.filter(seat => seat.selected).map(seat => seat.id ?? "")
-          });
+    if (!name.trim() || !phone.trim()) {
+      setWarningMessage("Please fill in all required fields.");
+      return;
     }
+    if (!movie) {
+      setWarningMessage("Movie not found.");
+      return;
+    } 
+    setWarningMessage("");
+    onBook?.({
+      name,
+      phone,
+      movieId: movie.id ?? 0,
+      seats: seats.filter(seat => seat.selected).map(seat => seat.id ?? 0)
+    });
+
+  }
 
   return (
     <div className="booking-overlay">
@@ -48,9 +47,10 @@ export default function BookingModule({ movie , seats = [], onBook, onClose }: B
         <div className="booking-module__header">
           <div>
             <h2>Book your tickets</h2>
-            <h3>{title}</h3>
+            <h3>{movie?.title || "Unknown Movie"}</h3>
           </div>
         </div>
+        {/* Stänger modulen om onClose skickats in från parent */}
           {onClose && (
             <button
               type="button"
@@ -83,16 +83,16 @@ export default function BookingModule({ movie , seats = [], onBook, onClose }: B
         <WarningMessage warningMessage={warningMessage} />
         
         <div className="booking-module__stats">
-          <div className="booking-module__stat"><span>Seats</span><strong>{selectedCount}</strong></div>
-          <div className="booking-module__stat"><span>Price</span><strong>{price} kr</strong></div>
-          <div className="booking-module__stat"><span>Total</span><strong>{total} kr</strong></div>
+          <div className="booking-module__stat"><span>Seats</span><strong>{selectedSeatCount}</strong></div>
+          <div className="booking-module__stat"><span>Price</span><strong>{movie?.price} kr</strong></div>
+          <div className="booking-module__stat"><span>Total</span><strong>{totalPrice} kr</strong></div>
         </div>
 
         <button
           id="book-button"
           type="button"
           onClick={handleBookClick}
-          disabled={!selectedCount || !movie}
+          disabled={!selectedSeatCount || !movie}
         >
           Book Now
         </button>
