@@ -1,11 +1,6 @@
 import {useState, useEffect, useMemo} from 'react';
-import { getMovies, getBookings, createBooking, Movie, Booking } from "./api";
-
-export interface Seat {
-  id: number;
-  occupied: boolean;
-  selected: boolean;
-}
+import { getMovies, getBookings, createBooking } from "./api";
+import { Movie, Booking, Seat } from "./types";
 
 export function useBooking() {
 
@@ -25,55 +20,45 @@ export function useBooking() {
         }))
     );
 
-
-    
     // Ladda filmer och bokningar från API vid komponentens mount. (mount = första renderingen)
     useEffect(() => {
-    Promise.all([getMovies(), getBookings()])
+        Promise.all([getMovies(), getBookings()])
 
-        .then(([moviesData, bookingsData]) => {
-            setMovies(moviesData);
-            setBookings(bookingsData);
-
-            if (moviesData.length > 0) {
-                setSelectedMovieId(moviesData[0].id);
-            }
-        })
-        .catch((err) => {
-        setWarningMessage(err.message);
-        });
+            .then(([moviesData, bookingsData]) => {
+                setMovies(moviesData);
+                setBookings(bookingsData);
+                if (moviesData.length > 0) {
+                    setSelectedMovieId(moviesData[0].id);
+                }
+            })
+            .catch((err) => {
+                setWarningMessage(err.message);
+            });
     }, []);
 
     // Beräkna upptagna säten för vald film (derived state)
     const occupiedSeatIds = useMemo(() => {
-    if (!selectedMovieId) return new Set();
-    return new Set(
-        bookings
-            .filter(booking => String(booking.movieId) === String(selectedMovieId))
-            .flatMap(booking => booking.seats)
-    );
+        if (!selectedMovieId) return new Set();
+        return new Set(
+            bookings
+                .filter(booking => String(booking.movieId) === String(selectedMovieId))
+                .flatMap(booking => booking.seats)
+        );
     }, [bookings, selectedMovieId]);
 
   // Seats som skickas till UI: occupied härleds, selected nollställs om sätet är upptaget
-  const seatsView: Seat[] = useMemo(
-    () =>
-      seats.map((s) => ({
+    const seatsView: Seat[] = useMemo(() => seats.map((s) => ({
         ...s,
         occupied: occupiedSeatIds.has(s.id),
         selected: occupiedSeatIds.has(s.id) ? false : s.selected,
       })),
-    [seats, occupiedSeatIds]
-  );
-
+        [seats, occupiedSeatIds]
+    );
     
-    const setSelectedMovie = (id: string | number) => {
-        const numId = Number(id);
-        setSelectedMovieId(numId);
-        setSeats(prevSeats => prevSeats.map(seat => ({ ...seat, selected: false })));
-    };
-
+    // Hitta vald film baserat på selectedMovieId
     const selectedMovie = selectedMovieId !== null ? movies.find(m => String(m.id) === String(selectedMovieId)) : null;
-
+    const selectedSeatCount = seatsView.filter(s => s.selected).length;
+    const totalPrice = selectedSeatCount * (selectedMovie?.price ?? 0);
 
   // Toggle av/på ett säte.
     function handleSeatClick(seatId: number) {
@@ -100,38 +85,41 @@ export function useBooking() {
         setShowBookingModule(true);
     }
 
-    function handleBooking(payload: Booking) {
-    const seatIds = seats.filter(s => s.selected).map(s => s.id);
+
+    function handleBooking(booking: Booking) {
+        const seatIds = seats.filter(s => s.selected).map(s => s.id);
+        
+        const bookingPayload = {
+            name: booking.name,
+            phone: booking.phone,
+            movieId: Number(booking.movieId),
+            seats: seatIds
+        };
     
-    const bookingPayload = {
-        name: payload.name,
-        phone: payload.phone,
-        movieId: Number(payload.movieId), // Convert to number
-        seats: seatIds
-    };
-    
-    createBooking(bookingPayload)
-        .then(() => {
-            return getBookings();
-        })
-        .then((updatedBookings) => {
-            setBookings(updatedBookings);
-            setSeats(prevSeats =>
-                prevSeats.map(seat =>
-                    seatIds.includes(seat.id) ? 
-                    { ...seat, selected: false } : seat
-                )
-            );
-            setShowBookingModule(false);
-            setWarningMessage("");
-        })
+        createBooking(bookingPayload)
+            .then(() => {
+                return getBookings();
+            })
+            .then((updatedBookings) => {
+                setBookings(updatedBookings);
+                setSeats(prevSeats =>
+                    prevSeats.map(seat =>
+                        seatIds.includes(seat.id) ? 
+                        { ...seat, selected: false } : seat
+                    )
+                );
+                setShowBookingModule(false);
+                setWarningMessage("");
+            })
         .catch((err) => setWarningMessage(err.message));
     }
 
-
-    const selectedSeatCount = seatsView.filter(s => s.selected).length;
-    const totalPrice = selectedSeatCount * (selectedMovie?.price ?? 0);
-
+    // Väljer film och nollställer de säten som är valda.
+    const setSelectedMovie = (id: string | number) => {
+        const numId = Number(id);
+        setSelectedMovieId(numId);
+        setSeats(prevSeats => prevSeats.map(seat => ({ ...seat, selected: false })));
+    };
 
     return {
         movies,
@@ -148,6 +136,5 @@ export function useBooking() {
         totalPrice
     };
 
-    
 }
 

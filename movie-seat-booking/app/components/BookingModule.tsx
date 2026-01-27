@@ -2,7 +2,6 @@
 import WarningMessage from './WarningMessage';
 import React from 'react';
 import { useState } from 'react';
-import { useBooking } from '@/lib/useBooking';
 
 // Interface för typning av props som skickas in till BookingModule 
 // komponenten från page.tsx
