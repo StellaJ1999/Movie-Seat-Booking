@@ -7,6 +7,9 @@ import Summary from "./components/Summary";
 import ContinueButton from "./components/ContinueButton";
 import BookingModule from "./components/BookingModule";
 import WarningMessage from "./components/WarningMessage";
+import AdminButton from "./components/AdminButton";
+import AdminModule from "./components/AdminModule";
+import { useAdmin } from "@/lib/useAdmin";
 
 export default function Page() {
   console.log('Page rendering');
@@ -26,10 +29,17 @@ export default function Page() {
     totalPrice
   } = useBooking();
 
+  const {
+    showAdminModule,
+    setShowAdminModule,
+    handleAdminButtonClick
+  } = useAdmin();
+
   console.log('selectedSeatCount:', selectedSeatCount, 'totalPrice:', totalPrice, 'selectedMovieId:', selectedMovieId);
 
   return (
     <>
+      <AdminButton onClick={handleAdminButtonClick} />
       <MovieSelector
         movies={movies}
         selectedMovieId={selectedMovieId}
@@ -40,7 +50,6 @@ export default function Page() {
       <Summary selectedSeatCount={selectedSeatCount ?? 0} totalPrice={totalPrice ?? 0} />
       <WarningMessage warningMessage={warningMessage} />
       <ContinueButton onClick={handleContinueClick} />
-      
       {showBookingModule && selectedMovieId != null &&
       <BookingModule 
           movie={movies.find(m => String(m.id) === String(selectedMovieId))!}
@@ -50,6 +59,9 @@ export default function Page() {
         selectedSeatCount={selectedSeatCount}
         totalPrice={totalPrice}
       />}
+      {showAdminModule &&
+        <AdminModule onClose={() => setShowAdminModule(false)} />
+      }
 
     </>
   );

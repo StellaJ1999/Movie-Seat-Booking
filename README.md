@@ -25,3 +25,7 @@
 - Create custom useBooking hook to separe all booking logic from page.tsx.
 - Debugging and cleaning code.
 - Dynamic updates of total price and amount of seats.
+
+## Day 4:
+- Create lib/types to separate interfaces.
+- Code cleanup.

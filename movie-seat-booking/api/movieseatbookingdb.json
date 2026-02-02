@@ -1,18 +1,6 @@
 {
   "movies": [
     {
-      "id": "1",
-      "title": "Fast and Furious 6",
-      "year": "2013",
-      "price": 100
-    },
-    {
-      "id": "2",
-      "title": "The Dark Knight",
-      "year": "2008",
-      "price": 120
-    },
-    {
       "id": "3",
       "title": "Inception",
       "year": "2010",
@@ -96,7 +84,7 @@
       "id": "cd50",
       "name": "Stella Jakstrand",
       "phone": "0760181123",
-      "movieId": "1",
+      "movieId": null,
       "seats": [
         11,
         12

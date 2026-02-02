@@ -1,10 +1,10 @@
 import {useState, useEffect, useMemo} from 'react';
-import { getMovies, getBookings, createBooking } from "./api";
-import { Movie, Booking, Seat } from "./types";
+import { getBookings, createBooking } from "./api";
+import { Booking, Seat } from "./types";
+import { useMovies } from './useMovies';
 
 export function useBooking() {
-
-    const [movies, setMovies] = useState<Movie[]>([]);
+    const { movies } = useMovies();
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
     const [warningMessage, setWarningMessage] = useState<string>("");
@@ -20,21 +20,18 @@ export function useBooking() {
         }))
     );
 
-    // Ladda filmer och bokningar från API vid komponentens mount. (mount = första renderingen)
     useEffect(() => {
-        Promise.all([getMovies(), getBookings()])
-
-            .then(([moviesData, bookingsData]) => {
-                setMovies(moviesData);
+        getBookings()
+            .then((bookingsData) => {
                 setBookings(bookingsData);
-                if (moviesData.length > 0) {
-                    setSelectedMovieId(moviesData[0].id);
+                if (movies.length > 0) {
+                    setSelectedMovieId(movies[0].id);
                 }
             })
             .catch((err) => {
                 setWarningMessage(err.message);
             });
-    }, []);
+    }, [movies]);
 
     // Beräkna upptagna säten för vald film (derived state)
     const occupiedSeatIds = useMemo(() => {
@@ -67,7 +64,7 @@ export function useBooking() {
             seat.id === seatId ? { ...seat, selected: !seat.selected } : seat
         ));
     } 
-    
+
     // Validerar att film och minst ett säte är valt innan bokningsmodulen öppnas.
     function handleContinueClick() {
         const selectedCount = seats.filter((seat) => seat.selected).length;
