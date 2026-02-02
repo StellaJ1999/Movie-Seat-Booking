@@ -11,9 +11,6 @@ type AdminModuleProps = {
 export default function AdminModule({ onClose }: AdminModuleProps) {
 
     const { 
-        showAdminModule,
-        setShowAdminModule,
-        handleAdminButtonClick,
         movies,
         handleSelectMovie,
         selectedMovieId,

@@ -29,3 +29,13 @@
 ## Day 4:
 - Create lib/types to separate interfaces.
 - Code cleanup.
+
+## Day 5:
+- Separate movie logic into it's own custom hook.
+- Create CRUD functions for movies in api.ts.
+- Create custom useAdmin hook to handle movie CRUD operations.
+- Create and style AdminModule.
+
+## Day 6:
+- Wire up page.tsx and AdminModule with useAdmin hook.
+- Fill in update forms input with selected movies values.
