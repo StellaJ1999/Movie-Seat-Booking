@@ -1,3 +1,50 @@
+#Overview
+A Next.js React application for booking movie seats with an admin panel to manage movies.
+
+#Core Features
+
+##User Booking:
+
+- Browse available movies
+- Select seats dynamically
+- Validate selections before booking
+- Submit bookings with name and phone
+- Real-time seat status updates (available, selected, occupied)
+- Dynamic price calculation
+
+##Admin Panel:
+
+- Create new movies (title, year, price)
+- Update existing movies
+- Delete movies
+- Movie selector dropdown for updates/deletes
+
+#Architecture
+
+##Components:
+
+- page.tsx - Main page with movie/seat selection
+- BookingModule.tsx - Booking form modal
+- AdminModule.tsx - Admin CRUD forms
+- MovieSelector.tsx - Shared dropdown component
+- WarningMessage.tsx - Error/validation messages
+- AdminButton.tsx - Toggle admin panel button
+
+#Custom Hooks:
+
+-useBooking() - Handles seat selection, bookings, API sync
+-useAdmin() - Handles movie CRUD operations
+-useMovies() - Shared movie state between hooks
+
+#API:
+
+- lib/api.ts - Fetch functions for movies & bookings
+- json-server backend (port 3002)
+
+#Data:
+
+lib/types.ts - TypeScript interfaces (Movie, Seat, Booking)
+
 # LogBook:
 
 ## Day 1 :
