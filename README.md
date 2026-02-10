@@ -32,9 +32,9 @@ A Next.js React application for booking movie seats with an admin panel to manag
 
 # Custom Hooks:
 
--useBooking() - Handles seat selection, bookings, API sync
--useAdmin() - Handles movie CRUD operations
--useMovies() - Shared movie state between hooks
+- useBooking() - Handles seat selection, bookings, API sync
+- useAdmin() - Handles movie CRUD operations
+- useMovies() - Shared movie state between hooks
 
 # API:
 
